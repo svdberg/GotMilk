@@ -1,4 +1,4 @@
-GotMilk
-=======
+Application to support breastfeeding.
 
-GotMilk
+Requires a patched version of bson-json-haskell.
+
