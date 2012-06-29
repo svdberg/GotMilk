@@ -19,46 +19,98 @@
 	</style>
 	<link rel="stylesheet" href="css/bootstrap-responsive.min.css">
 	<link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/cupertino/jquery-ui-1.7.3.custom.css">
 
 	<script src="js/libs/modernizr-2.5.3-respond-1.1.0.min.js"></script>
 </head>
 <body>
-  <div id="header"><span class="title">Milkmachine!</span></div>
+<!--[if lt IE 7]><p class=chromeframe>Your browser is <em>ancient!</em> <a href="http://browsehappy.com/">Upgrade to a different browser</a> or <a href="http://www.google.com/chromeframe/?redirect=true">install Google Chrome Frame</a> to experience this site.</p><![endif]-->
 
-<div id="sidebar"></div>
-<div id="content"></div>
+    <div class="navbar navbar-fixed-top">
+      <div class="navbar-inner">
+        <div class="container">
+          <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </a>
+          <a class="brand" href="#">Milkmachine!</a>
+          <div class="nav-collapse">
+            <ul class="nav">
+              <li class="active"><a href="#">Home</a></li>
+              <li><a href="#about">About</a></li>
+              <li><a href="#contact">Contact</a></li>
+            </ul>
+          </div><!--/.nav-collapse -->
+        </div>
+      </div>
+    </div>
 
-  <!-- Templates -->
+    <div class="container">
+
+      <!-- Main hero unit for a primary marketing message or call to action -->
+      <div class="hero-unit">
+        <h1>Welcome to Milkmachine!</h1>
+        <p>This is a simple application that helps you keep track of your breast feedings. It shows you a list of your 10 most recent breast feedings, including
+        information on what breast was last, poo's or pee's of your baby and the time and date.</p>
+        <p><a class="btn btn-primary btn-large">Learn more &raquo;</a></p>
+      </div>
+
+      <div class="header" id="header">
+        <span class="title"></span>
+      </div>
+      
+
+      <!-- Example row of columns--!>
+      <div class="row">
+        <div class="sidebar hero-unit" id="sidebar">
+        </div>
+        <div class="content" id="content">
+        </div>
+      </div>
+
+      <hr>
+
+      <footer>
+        <p>&copy; CodeMonkeys.nl 2012</p>
+      </footer>
+
+    </div> <!-- /container -->
+ <!-- Templates -->
 <script type="text/template" id="tpl-header">
-    <span class="title">Milkmachine!</span>
-    <button class="new">New Feeding</button>
+    <button class="new btn btn-primary btn-large">New Feeding</button>
 </script>
 
 <script type="text/template" id="tpl-feeding-list-item">
-  <a href='#feedings/<%= _id %>'><%= date %> <%= side %> <%= time %> <%= excrement %> <%= remarks %></a>
+  <td><%= $.format.date(new Date(date), 'dd-MM-yyyy') %></td><td> <%= side %></td><td> <%= time %></td><td> <%= excrement %></td><td> <%= remarks %></td></td>
+    <td><a href='#feedings/<%= _id %>'>edit</a></td>
 </script>
 
 <script type="text/template" id="tpl-feeding-details">
     <div class="form-left-col">
-        <label>_Id:</label>
-        <input type="text" id="wineId" name="_id" value="<%= _id %>" disabled />
+        <input type="hidden" id="wineId" name="_id" value="<%= _id %>"
+        disabled />
         <label>Date:</label>
-        <input type="text" id="date" name="date" value="<%= date %>" required/>
+        <input type="date" id="date" name="date" value="<%= date %>" required/>
         <label>Time:</label>
-        <input type="text" id="time" name="time" value="<%= time %>"/>
+        <input type="time" id="time" name="time" value="<%= time %>"/>
         <label>Excrements:</label>
         <input type="text" id="excrement" name="excrement" value="<%= excrement %>"/>
         <label>Side:</label>
         <input type="text" id="side" name="side" value="<%= side %>"/>
         <label>Remarks:</label>
-        <input type="text" id="remarks" name="remarks" value="<%= remarks %>"/>
-        <button class="save">Save</button>
-        <button class="delete">Delete</button>
+        <input type="text" id="remarks" name="remarks" value="<%= remarks %>"/></br>
+        <button class="save btn btn-primary btn-large">Save</button>
+        <button class="delete btn btn-large">Delete</button>
     </div>
 </script>
 <script src="js/libs/jquery-1.7.2.min.js"></script>
+<script src="js/libs/jquery-ui-1.7.3.custom.min.js"></script>
 <script src="js/libs/underscore-min.js"></script>
 <script src="js/libs/backbone-min.js"></script>
 <script src="js/main.js"></script>  
+<script src="js/libs/bootstrap/bootstrap.min.js"></script>
+<script src="js/libs/jquery.dateFormat-1.0.js"></script>
+<script src="js/script.js"></script>
 </body>
 </html>

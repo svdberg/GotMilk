@@ -21,7 +21,7 @@ window.FeedingCollection = Backbone.Collection.extend({
 // Views
 window.FeedingListView = Backbone.View.extend({
 
-    tagName:'ul',
+    tagName:'table',
 
     initialize:function () {
         this.model.bind("reset", this.render, this);
@@ -41,7 +41,7 @@ window.FeedingListView = Backbone.View.extend({
 
 window.FeedingListItemView = Backbone.View.extend({
 
-    tagName:"li",
+    tagName:"tr",
 
     template:_.template($('#tpl-feeding-list-item').html()),
 
