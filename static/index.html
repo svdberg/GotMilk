@@ -81,7 +81,7 @@
 </script>
 
 <script type="text/template" id="tpl-feeding-list-item">
-  <td><%= $.format.date(new Date(date), 'dd-MM-yyyy') %></td><td> <%= side %></td><td> <%= $.format.date(new Date(time), 'HH:mm') %></td><td> <%= excrement %></td><td> <%= remarks %></td></td>
+  <td><%= $.format.date(new Date(date), 'yyyy-MM-dd') %></td><td> <%= side %></td><td> <%= $.format.date(new Date(time), 'HH:mm') %></td><td> <%= excrement %></td><td> <%= remarks %></td></td>
   <td><a href='#feedings/<%= _id %>'>edit</a></td>
 </script>
 
@@ -90,9 +90,9 @@
         <input type="hidden" id="wineId" name="_id" value="<%= _id %>"
         disabled />
         <label>Date:</label>
-        <input type="date" id="date" name="date" value="<%= $.format.date(new Date(date), 'dd-MM-yyyy') %>   " required/>
+        <input type="date" id="date" name="date" value="<%= $.format.date(new Date(Date.UTC(date)), 'yyyy-MM-dd') %>   " required/>
         <label>Time:</label>
-        <input type="time" id="time" name="time" value="<%= $.format.date(new Date(time), 'HH:mm') %>   "/>
+        <input type="time" id="time" name="time" value="<%= $.format.date(new Date(Date.UTC(time)), 'HH:mm') %>   "/>
         <label>Excrements:</label>
         <input type="text" id="excrement" name="excrement" value="   <%= excrement %>"/>
         <label>Side:</label>

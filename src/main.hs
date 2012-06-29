@@ -52,7 +52,7 @@ allBreastFeedings :: M.Action IO [Document]
 allBreastFeedings = rest =<< find (select [] "breastfeeding") {sort = ["date" =: -1, "time" =: -1]} {limit = 10}
 
 dateFromString :: String -> UTCTime
-dateFromString s = readTime defaultTimeLocale "%d-%m-%Y" s :: UTCTime
+dateFromString s = readTime defaultTimeLocale "%Y-%m-%d" s :: UTCTime
 
 --parse time in the form of xx:xx to a UTCTime
 timeFromString :: String -> UTCTime
