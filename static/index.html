@@ -59,7 +59,6 @@
       <div class="header" id="header">
         <span class="title"></span>
       </div>
-      
 
       <!-- Example row of columns--!>
       <div class="row">
@@ -82,8 +81,8 @@
 </script>
 
 <script type="text/template" id="tpl-feeding-list-item">
-  <td><%= $.format.date(new Date(date), 'dd-MM-yyyy') %></td><td> <%= side %></td><td> <%= time %></td><td> <%= excrement %></td><td> <%= remarks %></td></td>
-    <td><a href='#feedings/<%= _id %>'>edit</a></td>
+  <td><%= $.format.date(new Date(date), 'dd-MM-yyyy') %></td><td> <%= side %></td><td> <%= $.format.date(new Date(time), 'HH:mm') %></td><td> <%= excrement %></td><td> <%= remarks %></td></td>
+  <td><a href='#feedings/<%= _id %>'>edit</a></td>
 </script>
 
 <script type="text/template" id="tpl-feeding-details">
@@ -91,11 +90,11 @@
         <input type="hidden" id="wineId" name="_id" value="<%= _id %>"
         disabled />
         <label>Date:</label>
-        <input type="date" id="date" name="date" value="<%= date %>" required/>
+        <input type="date" id="date" name="date" value="<%= $.format.date(new Date(date), 'dd-MM-yyyy') %>   " required/>
         <label>Time:</label>
-        <input type="time" id="time" name="time" value="<%= time %>"/>
+        <input type="time" id="time" name="time" value="<%= $.format.date(new Date(time), 'HH:mm') %>   "/>
         <label>Excrements:</label>
-        <input type="text" id="excrement" name="excrement" value="<%= excrement %>"/>
+        <input type="text" id="excrement" name="excrement" value="   <%= excrement %>"/>
         <label>Side:</label>
         <input type="text" id="side" name="side" value="<%= side %>"/>
         <label>Remarks:</label>

@@ -25,18 +25,19 @@ doMongo db action = do
     Right val -> return val 
     Left failure -> fail $ show failure
 
-clearAllBreastFeedings = M.delete (select [] "breastfeeding")
-
-insertBreastFeedings = insertMany "breastfeeding" [
-    ["date" =: (dateFromString "23-03-2012"), "side" =: "L", "time" =: (timeFromString "22:30"), "excrement" =: "P", "remarks" =: ""],
-    ["date" =: (dateFromString "24-03-2012"), "side" =: "L/R", "time" =: (timeFromString "02:30"), "excrement" =: "PB", "remarks" =: "Spuugje"],
-    ["date" =: (dateFromString "23-03-2012"), "side" =: "R", "time" =: (timeFromString "22:45"), "excrement" =: "B", "remarks" =: "huilen"] ]
-
 insertFeeding :: Document -> M.Action IO M.Value
-insertFeeding b = insert "breastfeeding" $ exclude ["_id"] b --we should remove any _id
+insertFeeding b = insert "breastfeeding" $ exclude ["_id"] feed --we should remove any _id
+              where
+                feed = merge ["date" =: (dateFromString stringDate), "time" =: (timeFromString stringTime)] b
+                stringDate = M.at "date" b :: String
+                stringTime = M.at "time" b :: String
 
 updateFeeding :: Document -> M.Action IO () 
-updateFeeding b = save "breastfeeding" b
+updateFeeding b = save "breastfeeding" feed
+              where
+                feed = merge ["date" =: (dateFromString stringDate), "time" =: (timeFromString stringTime)] b
+                stringDate = M.at "date" b :: String
+                stringTime = M.at "time" b :: String
 
 deleteFeeding :: ObjectId -> M.Action IO ()
 deleteFeeding id = deleteOne $ select ["_id" =: id] "breastfeeding"
@@ -48,12 +49,7 @@ breastFeedingById key = do
 findOneBreastFeeding id = findOne (select ["_id" =: id] "breastfeeding")
 
 allBreastFeedings :: M.Action IO [Document]
-allBreastFeedings = rest =<< find (select [] "breastfeeding") {sort = ["date" =: -1, "time" =: 1]} {limit = 10}
-
-printDocs :: String -> [Document] -> M.Action IO ()
-printDocs title docs = liftIO $ putStrLn title >> mapM_ (print . exclude ["_id"]) docs
-
-printJsonDocs jsonDocs = liftIO $ mapM_ (print) jsonDocs
+allBreastFeedings = rest =<< find (select [] "breastfeeding") {sort = ["date" =: -1, "time" =: -1]} {limit = 10}
 
 dateFromString :: String -> UTCTime
 dateFromString s = readTime defaultTimeLocale "%d-%m-%Y" s :: UTCTime
