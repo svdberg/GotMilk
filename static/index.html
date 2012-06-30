@@ -90,9 +90,9 @@
         <input type="hidden" id="wineId" name="_id" value="<%= _id %>"
         disabled />
         <label>Date:</label>
-        <input type="date" id="date" name="date" value="<%= $.format.date(new Date(Date.UTC(date)), 'yyyy-MM-dd') %>" required/>
+        <input type="date" id="date" name="date" value="<%= $.format.date(new Date(date), 'yyyy-MM-dd') %>" required/>
         <label>Time:</label>
-        <input type="time" id="time" name="time" value="<%= $.format.date(new Date(Date.UTC(time)), 'HH:mm') %>"/>
+        <input type="time" id="time" name="time" value="<%= $.format.date(new Date(time), 'HH:mm') %>"/>
         <label>Excrements:</label>
         <input type="text" id="excrement" name="excrement" value="<%= excrement %>"/>
         <label>Side:</label>
