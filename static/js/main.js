@@ -99,11 +99,16 @@ window.FeedingView = Backbone.View.extend({
             remarks:$('#remarks').val()
         });
         if (this.model.isNew()) {
-          console.log('new model with id: ' + this.model._id);
-            app.feedingList.create(this.model);
+          console.log('new model with id: ' + this.model.id);
+          var self = this;
+          app.feedingList.create(this.model, {
+            success: function() {
+              app.navigate('feedings/'+self.model.id, false);
+            }
+          });
         } else {
-          console.log('existing model with id: ' + this.model._id);
-            this.model.save();
+          console.log('existing model with id: ' + this.model.id);
+          this.model.save();
         }
         return false;
     },
@@ -141,11 +146,9 @@ window.HeaderView = Backbone.View.extend({
         "click .new":"newFeeding"
     },
  
-    newFeeding:function (event) {
-        if (app.feedingView) app.feedingView.close();
-        app.feedingView = new FeedingView({model:new Feeding()});
-        $('#content').html(app.feedingView.render().el);
-        return false;
+    newFeeding: function(event) {
+      app.navigate("feedings/new", true);
+      return false;
     }
 });
 
@@ -154,6 +157,7 @@ var AppRouter = Backbone.Router.extend({
 
     routes:{
         "":"list",
+        "feedings/new":"newFeeding",
         "feedings/:id":"feedingDetails"
     },
 
@@ -163,9 +167,14 @@ var AppRouter = Backbone.Router.extend({
 
     list:function () {
         this.feedingList = new FeedingCollection();
-        this.feedingListView = new FeedingListView({model:this.feedingList});
-        this.feedingList.fetch();
-        $('#sidebar').html(this.feedingListView.render().el);
+        var self = this;
+        this.feedingList.fetch({
+            success:function () {
+                self.feedingListView = new FeedingListView({model:self.feedingList});
+                $('#sidebar').html(self.feedingListView.render().el);
+                if (self.requestedId) self.feedingDetails(self.requestedId);
+            }
+        });
     },
 
     feedingDetails:function (id) {
@@ -173,6 +182,12 @@ var AppRouter = Backbone.Router.extend({
         if (app.feedingView) app.feedingView.close();
         this.feedingView = new FeedingView({model:this.feeding});
         $('#content').html(this.feedingView.render().el);
+    },
+
+    newFeeding:function () {
+        if (app.feedingView) app.feedingView.close();
+        app.feedingView = new FeedingView({model:new Feeding()});
+        $('#content').html(app.feedingView.render().el);
     }
 });
 
