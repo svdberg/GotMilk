@@ -10,7 +10,7 @@ import Data.Aeson.Encode
 import Data.Aeson
 import Network.Wai.Middleware.RequestLogger
 import Network.Wai.Middleware.Static
-import Web.Scotty
+import Web.Scotty as W
 import Data.Maybe
 import Control.Monad.IO.Class
 import Network.HTTP.Types (status200,status404)
@@ -68,13 +68,13 @@ main = scotty 3000 $ do
 
     get "/api/feedings" $ do
       e <- liftIO $ doMongo "breastfeeding" allBreastFeedings 
-      Web.Scotty.json e
+      W.json e
 
     get "/api/feedings/:objectId" $ do
       key <- param "objectId" :: ActionM String 
       e <- liftIO $ doMongo "breastfeeding" (breastFeedingById (read key))
       case e of
-            Just p -> Web.Scotty.json p
+            Just p -> W.json p
             Nothing -> status status404
 
     post "/api/feedings" $ do
@@ -82,16 +82,16 @@ main = scotty 3000 $ do
         val <- liftIO $ doMongo "breastfeeding" (insertFeeding v)
         let oid = (read $ show val) :: ObjectId
         result <- liftIO $ doMongo "breastfeeding" (breastFeedingById oid)
-        Web.Scotty.json $ result
+        W.json $ result
 
     put "/api/feedings/:objectId" $ do
         id <- param "objectId" :: ActionM String
         v <- jsonData
         let objectid = read id :: ObjectId  
         result <- liftIO $ doMongo "breastfeeding" (updateFeeding (merge ["_id" =: objectid] v))
-        Web.Scotty.json result
+        W.json result
   
-    Web.Scotty.delete "/api/feedings/:objectId" $ do
+    W.delete "/api/feedings/:objectId" $ do
         id <- param "objectId" :: ActionM String
         let objectid = read id :: ObjectId
         liftIO $ doMongo "breastfeeding" (deleteFeeding objectid)
