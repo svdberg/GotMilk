@@ -19,7 +19,6 @@
 	</style>
 	<link rel="stylesheet" href="css/bootstrap-responsive.min.css">
 	<link rel="stylesheet" href="css/style.css">
-  <link rel="stylesheet" href="css/cupertino/jquery-ui-1.7.3.custom.css">
 
 	<script src="js/libs/modernizr-2.5.3-respond-1.1.0.min.js"></script>
 </head>
@@ -63,12 +62,16 @@
       <!-- Example row of columns--!>
       <div class="row">
         <div class="sidebar hero-unit" id="sidebar">
-        </div>
         <div class="content" id="content">
+        </div>
         </div>
       </div>
 
       <hr>
+
+		<ul id="pagination">
+			</ul>
+
 
       <footer>
         <p>&copy; CodeMonkeys.nl 2012</p>
@@ -80,7 +83,7 @@
     <button class="new btn btn-primary btn-large">New Feeding</button>
 </script>
 
-<script type="text/template" id="tpl-feeding-list-item">
+<script type="text/template" id="resultItemTemplate">
   <td><%= $.format.date(new Date(date), 'yyyy-MM-dd') %></td><td> <%= side %></td><td> <%= $.format.date( new Date((new Date(time)).getTime() + ((new Date(time)).getTimezoneOffset() * 60000)), 'HH:mm') %></td><td> <%= excrement %></td><td> <%= remarks %></td></td>
   <td><a href='#feedings/<%= _id %>'>edit</a></td>
 </script>
@@ -103,13 +106,75 @@
         <button class="delete btn btn-large">Delete</button>
     </div>
 </script>
-<script src="js/libs/jquery-1.7.2.min.js"></script>
-<script src="js/libs/jquery-ui-1.7.3.custom.min.js"></script>
-<script src="js/libs/underscore-min.js"></script>
-<script src="js/libs/backbone-min.js"></script>
-<script src="js/main.js"></script>  
-<script src="js/libs/bootstrap/bootstrap.min.js"></script>
-<script src="js/libs/jquery.dateFormat-1.0.js"></script>
-<script src="js/script.js"></script>
+
+		<!--sample template for pagination UI-->
+
+		<script type="text/html" id="tmpClientPagination">
+		 <div class="breadcrumb">
+
+			<span class="cell last pages">
+				<% if (currentPage != 1) { %>
+					<a href="#" class="first">First</a>
+					<a href="#" class="prev">Previous</a>
+				<% } %>
+				<% _.each (pageSet, function (p) { %>
+					<% if (currentPage == p) { %>
+						<span class="page selected"><%= p %></span>
+					<% } else { %>
+						<a href="#" class="page"><%= p %></a>
+					<% } %>
+				<% }); %>
+				<% if (lastPage != currentPage && lastPage != 0) { %>
+					<a href="#" class="next">Next</a>
+					<a href="#" class="last">Last</a>
+				<% } %>
+			</span>
+
+			<span class="divider">/</span>
+			
+			<span class="cell first records">
+				<span class="current"><%= startRecord %></span>
+				-
+				<span class="perpage"><%= endRecord %></span>
+				of
+				<span class="total"><%= totalRecords %></span>
+							shown
+			</span>
+
+		  </div>
+		</script>
+
+
+		
+		<!-- scripts-->
+
+    <!-- libs -->
+    <script src="js/libs/jquery-1.7.2.min.js"></script>
+    <script src="js/libs/jquery-ui-1.7.3.custom.min.js"></script>
+    <script src="js/libs/underscore-min.js"></script>
+    <script src="js/libs/backbone.js"></script>
+    <script src="js/libs/bootstrap/bootstrap.min.js"></script>
+    <script src="js/libs/jquery.dateFormat-1.0.js"></script>
+
+    <!-- main app -->
+    <script src="app.js"></script>  
+
+    <!-- Backbone.Paginator -->
+    <script src="js/libs/backbone.paginator.js"></script>
+
+		<!--Models/Collections-->
+		<script src="models/Feeding.js"></script>
+		<script src="collections/PaginatedCollection.js"></script>
+
+		<!--Views-->
+		<script src="views/ResultView.js"></script>
+		<script src="views/PaginationView.js"></script>
+		<script src="views/ItemView.js"></script>
+    <script src="views/HeaderView.js"></script>
+		<script src="views/AppView.js"></script>
+
+    <!-- router -->
+    <script src="router/AppRouter.js"></script>
+
 </body>
 </html>

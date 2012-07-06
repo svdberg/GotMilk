@@ -3,7 +3,6 @@ window.Feeding = Backbone.Model.extend({
   idAttribute: "_id",
   urlRoot:"../api/feedings",
   defaults:{
-        "_id":null,
         "date": new Date(),
         "side":"",
         "time":"",

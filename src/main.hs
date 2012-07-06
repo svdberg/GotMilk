@@ -49,7 +49,7 @@ breastFeedingById key = do
 findOneBreastFeeding id = findOne (select ["_id" =: id] "breastfeeding")
 
 allBreastFeedings :: M.Action IO [Document]
-allBreastFeedings = rest =<< find (select [] "breastfeeding") {sort = ["date" =: -1, "time" =: -1]} {limit = 10}
+allBreastFeedings = rest =<< find (select [] "breastfeeding") {sort = ["date" =: -1, "time" =: -1]} 
 
 dateFromString :: String -> UTCTime
 dateFromString s = readTime defaultTimeLocale "%Y-%m-%d" s :: UTCTime
@@ -60,7 +60,7 @@ timeFromString s = readTime defaultTimeLocale "%H:%M" s :: UTCTime
 
 main :: IO ()
 main = scotty 3000 $ do
-    middleware logStdout
+    middleware logStdoutDev
     middleware $ staticPolicy (noDots >-> addBase "static")
 
     get "/" $ do
