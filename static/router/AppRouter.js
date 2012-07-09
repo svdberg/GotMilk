@@ -1,5 +1,5 @@
 // Router
-(function ( router ) { 
+(function ( collections, router, views, models) { 
 
   router.AppRouter = Backbone.Router.extend({
 
@@ -14,30 +14,23 @@
     },
 
     list:function () {
-        this.feedingList = app.collections.paginatedItems;
+        this.feedingList = collections.paginatedItems;
         var self = this;
-        this.feedingList.fetch({
-            success:function () {
-                self.feedingListView = new FeedingListView({model:self.feedingList});
-                $('#sidebar').html(self.feedingListView.render().el);
-                if (self.requestedId) self.feedingDetails(self.requestedId);
-            }
-        });
     },
 
     feedingDetails:function (id) {
         this.feeding = this.feedingList.get(id);
         if (app.feedingView) app.feedingView.close();
-        this.feedingView = new app.views.ItemView({model:this.feeding});
-        $('#content').html(this.feedingView.render().el);
+        this.feedingView = new views.ItemView({model:this.feeding});
+        $('#editbox').html(this.feedingView.render().el);
     },
 
     newFeeding:function () {
         if (app.feedingView) app.feedingView.close();
-        app.feedingView = new app.views.ItemView({model:new Feeding()});
-        $('#content').html(app.feedingView.render().el);
+        app.feedingView = new views.ItemView({model:new models.Feeding()});
+        $('#editbox').html(app.feedingView.render().el);
     }
   });
-})( app.router );
+})( app.collections, app.router, app.views, app.models );
 
 

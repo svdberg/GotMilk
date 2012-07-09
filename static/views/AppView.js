@@ -1,4 +1,4 @@
-(function ( views ) {
+( function ( views ) {
 
 	views.AppView = Backbone.View.extend({
 
@@ -37,4 +37,3 @@
 
 })( app.views );
 
-  //Backbone.history.start();
