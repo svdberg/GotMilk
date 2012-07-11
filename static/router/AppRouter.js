@@ -5,7 +5,6 @@
 
     routes:{
         "":"list",
-        "feedings/list":"list",
         "feedings/new":"newFeeding",
         "feedings/:id":"feedingDetails"
     },

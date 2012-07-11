@@ -11,7 +11,7 @@
     },
 
 		// the URL (or base URL) for the service
-		url: '../api/feedings'
+		urlRoot: '../api/feedings'
   });
 
 })( app.models );
