@@ -6,15 +6,15 @@
 
 		initialize : function () {
 
-			var tags = this.collection;
+			var feedings = this.collection;
 
-			tags.on('add', this.addOne, this);
-			tags.on('reset', this.addAll, this);
-			tags.on('all', this.render, this);
+			feedings.on('add', this.addOne, this);
+			feedings.on('reset', this.addAll, this);
+			feedings.on('all', this.render, this);
 			
-			tags.fetch({
+			feedings.fetch({
 				success: function(){
-					tags.pager();
+					feedings.pager();
 				},
 				silent:true
 			});

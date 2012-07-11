@@ -43,12 +43,23 @@
           var self = this;
           app.feedingList.create(this.model, {
             success: function() {
-              app.navigate('feedings/'+self.model.id, false);
+              app.feedingView.close();
+              app.navigate('#', true);
+            },
+            error: function() {
+              alert('Error during the creation of a new feeding');
             }
           });
         } else {
           console.log('existing model with id: ' + this.model.id);
-          this.model.save();
+          this.model.save(this.model, {
+            success: function(){ 
+              app.feedingView.close();
+              app.navigate('#', true);
+            },
+            error: function(){ alert('Error during the saving of the feeding');
+            }
+          });
         }
         return false;
     },

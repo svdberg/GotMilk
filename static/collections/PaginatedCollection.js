@@ -32,7 +32,12 @@
 			// 10 as a default in case your service doesn't return the total
 			totalPages: 10
 		}
-		
+    //comparator: function(item) {
+      //var theDate = new Date(item.get('date'));
+      //var theTime = new Date(item.get('time'));
+      //console.log("date: "+ theDate + " time: "+ theTime);
+      //return [theDate, -theTime]
+    //}
 	});
 
 })( app.collections, app.models.Feeding, Backbone.Paginator);
