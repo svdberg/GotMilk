@@ -5,6 +5,7 @@
 
     routes:{
         "":"list",
+        "feedings/list":"list",
         "feedings/new":"newFeeding",
         "feedings/:id":"feedingDetails"
     },
@@ -14,6 +15,7 @@
     },
 
     list:function () {
+        //we want to refetch the items.
         this.feedingList = collections.paginatedItems;
         var self = this;
     },

@@ -17,7 +17,8 @@
     events:{
         "change input":"change",
         "click .save":"saveFeeding",
-        "click .delete":"deleteFeeding"
+        "click .delete":"deleteFeeding",
+        "click .close":"closeFeeding"
     },
  
     change:function (event) {
@@ -60,6 +61,12 @@
             }
         });
         return false;
+    },
+
+    closeFeeding:function () {
+      this.close();
+      app.feedingView.close();
+      app.navigate('#');
     },
  
     close:function () {
